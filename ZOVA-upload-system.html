@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZOVA Upload</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f7fa;color:#17202a;font-family:Arial,sans-serif}
+header{background:#fff;border-bottom:1px solid #ddd;padding:14px 18px;position:sticky;top:0}
+.logo{font-size:27px;font-weight:800}.tag{font-size:12px;color:#667085}
+main{max-width:720px;margin:24px auto;padding:0 14px}.card{background:#fff;border:1px solid #e1e5ea;border-radius:18px;padding:20px;margin-bottom:16px}
+h1{margin:0 0 8px}h2{font-size:18px}.pick{display:block;text-align:center;border:2px dashed #b9c2cc;border-radius:15px;padding:28px 12px;cursor:pointer;font-weight:700}
+input[type=file]{display:none}#preview{margin-top:14px;text-align:center}#preview img,#preview video{max-width:100%;max-height:330px;border-radius:13px}
+textarea,select{width:100%;padding:12px;border:1px solid #d4d9df;border-radius:12px;font-size:15px;background:#fff}
+button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-size:16px;font-weight:700}.post{background:#111827;color:#fff}.clear{background:#eef1f4}
+.notice{background:#f0f8f2;border-radius:12px;padding:13px;margin:15px 0;line-height:1.5}.rules{line-height:1.9;font-size:14px}
+#status{display:none;margin-top:15px;border-radius:12px;padding:14px;font-weight:700}
+small{color:#98a2b3}
+</style>
+</head>
+<body>
+<header><div class="logo">ZOVA</div><div class="tag">Create • Share • Inspire</div></header>
+<main>
+<section class="card">
+<h1>📤 ZOVA-তে আপলোড করুন</h1>
+<p>ভিডিও, অডিও বা ছবি নির্বাচন করুন। পোস্ট প্রকাশের আগে ZOVA-এর কনটেন্ট নীতিমালা অনুযায়ী পরীক্ষা করা হবে।</p>
+<div class="notice"><b>🤖 Automatic Content Check</b><br>এটি MVP ডেমো। বাস্তব AI moderation পরে server-side system-এর সঙ্গে যুক্ত হবে।</div>
+<label class="pick" for="media">ভিডিও / অডিও / ছবি নির্বাচন করুন</label>
+<input id="media" type="file" accept="video/*,audio/*,image/*">
+<div id="preview"></div><small>ভিডিও • অডিও • ছবি</small>
+</section>
+
+<section class="card">
+<h2>Post Details</h2>
+<textarea id="caption" rows="4" placeholder="কিছু লিখুন..."></textarea><br><br>
+<select id="category">
+<option>🕌 ইসলামিক</option><option>🤝 মানবিক</option><option>📚 শিক্ষামূলক</option><option>😊 Clean Funny</option><option>🎥 অন্যান্য উপকারী</option>
+</select>
+<div class="notice"><b>ZOVA Content Rules</b><div class="rules">
+✓ ইসলামিক, মানবিক ও উপকারী কনটেন্ট<br>
+✓ কুরআন তেলাওয়াত ও অনুমোদিত ইসলামিক অডিও<br>
+✓ ক্ষতিহীন ও অশালীনতামুক্ত ফানি কনটেন্ট<br>
+✕ অশ্লীলতা, যৌন কনটেন্ট বা ডান্স<br>
+✕ নিষিদ্ধ ছবি/ভিডিও বা ক্ষতিকর কনটেন্ট<br>
+✕ ZOVA নীতির বাইরে অডিও/কনটেন্ট
+</div></div>
+<button class="post" onclick="checkPost()">Check & Upload</button>
+<button class="clear" onclick="resetForm()">Clear</button>
+<div id="status"></div>
+</section>
+</main>
+
+<script>
+const media=document.getElementById('media'), preview=document.getElementById('preview'), statusBox=document.getElementById('status');
+media.onchange=()=>{
+ preview.innerHTML=''; const f=media.files[0]; if(!f)return;
+ const u=URL.createObjectURL(f);
+ if(f.type.startsWith('image/')) preview.innerHTML='<img src="'+u+'">';
+ else if(f.type.startsWith('video/')) preview.innerHTML='<video src="'+u+'" controls></video>';
+ else if(f.type.startsWith('audio/')) preview.innerHTML='<audio src="'+u+'" controls style="width:100%"></audio>';
+};
+function show(t,bg,color){statusBox.style.display='block';statusBox.textContent=t;statusBox.style.background=bg;statusBox.style.color=color}
+function checkPost(){
+ const f=media.files[0], text=((f?f.name:'')+' '+document.getElementById('caption').value).toLowerCase();
+ if(!f)return show('⚠️ আগে একটি ফাইল নির্বাচন করুন।','#fff8e7','#9a6700');
+ if(f.size>100*1024*1024)return show('❌ ফাইল 100MB-এর বেশি।','#fff1f0','#b42318');
+ show('🤖 ZOVA কনটেন্ট চেক করছে...','#eef4ff','#175cd3');
+ setTimeout(()=>{
+  const bad=['porn','xxx','nudity','nude','sex','dance','অশ্লীল','নগ্ন','ডান্স'];
+  if(bad.some(x=>text.includes(x))) show('❌ এই কনটেন্টের নাম/বর্ণনায় নিষিদ্ধ শব্দ পাওয়া গেছে। পোস্ট প্রকাশ করা হয়নি।','#fff1f0','#b42318');
+  else show('✅ প্রাথমিক চেক পাস করেছে। এটি Demo Upload হিসেবে গ্রহণ করা হয়েছে।','#ecfdf3','#087443');
+ },1200);
+}
+function resetForm(){media.value='';preview.innerHTML='';document.getElementById('caption').value='';statusBox.style.display='none'}
+</script>
+</body>
+</html>
