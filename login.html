@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZOVA - Login & Create Account</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f4f6f8;
+color:#17202a;
+}
+
+.header{
+text-align:center;
+padding:30px 15px 15px;
+}
+
+.logo{
+font-size:42px;
+font-weight:900;
+letter-spacing:3px;
+}
+
+.tagline{
+color:#667085;
+font-size:14px;
+margin-top:5px;
+}
+
+.container{
+max-width:430px;
+margin:15px auto 40px;
+padding:15px;
+}
+
+.card{
+background:white;
+border-radius:20px;
+padding:24px;
+box-shadow:0 5px 25px rgba(0,0,0,.08);
+}
+
+.switch{
+display:flex;
+background:#eef1f4;
+border-radius:12px;
+padding:4px;
+margin-bottom:22px;
+}
+
+.switch button{
+width:50%;
+border:0;
+padding:12px;
+border-radius:9px;
+font-weight:bold;
+background:transparent;
+cursor:pointer;
+}
+
+.switch .active{
+background:#111827;
+color:white;
+}
+
+.form{
+display:none;
+}
+
+.form.active{
+display:block;
+}
+
+h2{
+margin-top:0;
+}
+
+label{
+display:block;
+font-size:14px;
+font-weight:bold;
+margin:14px 0 6px;
+}
+
+input{
+width:100%;
+padding:13px;
+border:1px solid #d5d9df;
+border-radius:11px;
+font-size:15px;
+outline:none;
+}
+
+input:focus{
+border-color:#111827;
+}
+
+.mainbtn{
+width:100%;
+margin-top:20px;
+padding:14px;
+border:0;
+border-radius:11px;
+background:#111827;
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.forgot{
+display:block;
+text-align:right;
+margin-top:10px;
+font-size:13px;
+color:#475467;
+}
+
+.info{
+background:#f0f8f2;
+padding:12px;
+border-radius:11px;
+font-size:13px;
+line-height:1.5;
+margin-top:18px;
+}
+
+.message{
+display:none;
+padding:12px;
+border-radius:10px;
+margin-top:15px;
+font-weight:bold;
+font-size:14px;
+}
+
+.footer{
+text-align:center;
+color:#667085;
+font-size:12px;
+margin-top:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="logo">
+ZOVA
+</div>
+
+<div class="tagline">
+Connect • Create • Inspire
+</div>
+
+</div>
+
+
+<div class="container">
+
+<div class="card">
+
+<div class="switch">
+
+<button id="loginTab"
+class="active"
+onclick="showLogin()">
+Login
+</button>
+
+<button id="signupTab"
+onclick="showSignup()">
+Create Account
+</button>
+
+</div>
+
+
+<!-- LOGIN -->
+
+<div id="loginForm" class="form active">
+
+<h2>Welcome back 👋</h2>
+
+<p>
+আপনার ZOVA অ্যাকাউন্টে Login করুন।
+</p>
+
+<label>Email / Username</label>
+
+<input
+id="loginUser"
+type="text"
+placeholder="Email অথবা Username"
+>
+
+<label>Password</label>
+
+<input
+id="loginPassword"
+type="password"
+placeholder="Password"
+>
+
+<a class="forgot" href="#">
+Forgot password?
+</a>
+
+<button
+class="mainbtn"
+onclick="login()">
+Login
+</button>
+
+<div class="message" id="loginMessage"></div>
+
+</div>
+
+
+<!-- SIGN UP -->
+
+<div id="signupForm" class="form">
+
+<h2>Create your ZOVA account 🚀</h2>
+
+<p>
+নতুন ZOVA অ্যাকাউন্ট তৈরি করুন।
+</p>
+
+<label>Full Name</label>
+
+<input
+id="name"
+type="text"
+placeholder="আপনার নাম"
+>
+
+<label>Username</label>
+
+<input
+id="username"
+type="text"
+placeholder="@username"
+>
+
+<label>Email</label>
+
+<input
+id="email"
+type="email"
+placeholder="example@email.com"
+>
+
+<label>Password</label>
+
+<input
+id="password"
+type="password"
+placeholder="কমপক্ষে 8 অক্ষর"
+>
+
+<label>Confirm Password</label>
+
+<input
+id="confirmPassword"
+type="password"
+placeholder="Password আবার লিখুন"
+>
+
+
+<div class="info">
+
+✓ ZOVA-এর Community Guidelines মেনে চলুন।<br>
+✓ ইসলামিক, মানবিক, শিক্ষামূলক ও উপকারী কনটেন্টকে উৎসাহিত করা হয়।<br>
+✓ নিষিদ্ধ বা ক্ষতিকর কনটেন্ট আপলোড করা যাবে না।
+
+</div>
+
+
+<button
+class="mainbtn"
+onclick="createAccount()">
+Create Account
+</button>
+
+<div class="message" id="signupMessage"></div>
+
+</div>
+
+</div>
+
+
+<div class="footer">
+© 2026 ZOVA • Your World. Your Voice.
+</div>
+
+</div>
+
+
+<script>
+
+function showLogin(){
+
+document.getElementById("loginForm")
+.classList.add("active");
+
+document.getElementById("signupForm")
+.classList.remove("active");
+
+document.getElementById("loginTab")
+.classList.add("active");
+
+document.getElementById("signupTab")
+.classList.remove("active");
+
+}
+
+
+function showSignup(){
+
+document.getElementById("signupForm")
+.classList.add("active");
+
+document.getElementById("loginForm")
+.classList.remove("active");
+
+document.getElementById("signupTab")
+.classList.add("active");
+
+document.getElementById("loginTab")
+.classList.remove("active");
+
+}
+
+
+function createAccount(){
+
+let name =
+document.getElementById("name").value.trim();
+
+let username =
+document.getElementById("username").value.trim();
+
+let email =
+document.getElementById("email").value.trim();
+
+let password =
+document.getElementById("password").value;
+
+let confirm =
+document.getElementById("confirmPassword").value;
+
+let message =
+document.getElementById("signupMessage");
+
+
+if(!name || !username || !email || !password || !confirm){
+
+message.style.display="block";
+message.style.background="#fff4e5";
+message.style.color="#9a6700";
+message.innerText="⚠️ সব তথ্য পূরণ করুন।";
+return;
+
+}
+
+
+if(password.length < 8){
+
+message.style.display="block";
+message.style.background="#fff1f0";
+message.style.color="#b42318";
+message.innerText="❌ Password কমপক্ষে 8 অক্ষরের হতে হবে।";
+return;
+
+}
+
+
+if(password !== confirm){
+
+message.style.display="block";
+message.style.background="#fff1f0";
+message.style.color="#b42318";
+message.innerText="❌ দুইটি Password একই নয়।";
+return;
+
+}
+
+
+message.style.display="block";
+message.style.background="#ecfdf3";
+message.style.color="#087443";
+
+message.innerText=
+"✅ তথ্য ঠিক আছে। পরবর্তী ধাপে আসল ZOVA account system-এর সঙ্গে এটি যুক্ত হবে।";
+
+}
+
+
+function login(){
+
+let user =
+document.getElementById("loginUser").value.trim();
+
+let password =
+document.getElementById("loginPassword").value;
+
+let message =
+document.getElementById("loginMessage");
+
+
+if(!user || !password){
+
+message.style.display="block";
+message.style.background="#fff4e5";
+message.style.color="#9a6700";
+
+message.innerText=
+"⚠️ Email/Username এবং Password দিন।";
+
+return;
+
+}
+
+
+message.style.display="block";
+message.style.background="#eef4ff";
+message.style.color="#175cd3";
+
+message.innerText=
+"🔐 Login system প্রস্তুত হচ্ছে। আসল authentication backend যুক্ত হলে এখানে নিরাপদভাবে Login হবে।";
+
+}
+
+</script>
+
+</body>
+  </html>
