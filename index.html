@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZOVA — Connect. Create. Share.</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f6f8;color:#111}
+.app{max-width:520px;margin:auto;background:#fff;min-height:100vh}
+header{position:sticky;top:0;background:#fff;border-bottom:1px solid #eee;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;z-index:5}
+.logo{font-size:28px;font-weight:900;letter-spacing:1px}
+.search{font-size:22px}
+.tabs{display:flex;gap:22px;padding:12px 16px;border-bottom:1px solid #eee;overflow:auto}
+.tabs button{border:0;background:none;font-weight:700;white-space:nowrap}
+.tabs .active{color:#5b35f5}
+.composer{margin:12px;border:1px solid #eee;border-radius:16px;padding:14px}
+.composer input{width:100%;border:0;outline:0;font-size:15px;padding:10px}
+.actions{display:flex;justify-content:space-around;margin-top:8px}
+.actions button{border:0;background:#f5f5f7;border-radius:10px;padding:9px 12px}
+.post{border-top:8px solid #f5f6f8;padding:14px 16px}
+.user{display:flex;align-items:center;gap:10px}
+.avatar{width:42px;height:42px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font-weight:bold}
+.name{font-weight:800}.handle{font-size:12px;color:#777}
+.post p{margin:12px 0;line-height:1.45}
+.video{height:285px;border-radius:14px;background:linear-gradient(135deg,#171717,#555);display:grid;place-items:center;color:#fff;font-size:44px}
+.postbar{display:flex;justify-content:space-between;padding-top:12px;color:#555}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:520px;width:100%;background:#fff;border-top:1px solid #ddd;display:flex;justify-content:space-around;padding:10px}
+.nav button{border:0;background:none;font-size:13px}.plus{background:#5b35f5!important;color:white;border-radius:50%;width:45px;height:45px;margin-top:-20px;font-size:24px!important}
+.screen{padding-bottom:75px}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="logo">ZOVA</div><div class="search">⌕</div></header>
+
+<div class="tabs">
+<button class="active" onclick="tab(this)">For You</button>
+<button onclick="tab(this)">Following</button>
+<button onclick="tab(this)">Trending</button>
+<button onclick="tab(this)">Shorts</button>
+</div>
+
+<div class="screen">
+<div class="composer">
+<input id="postText" placeholder="What's happening on ZOVA?">
+<div class="actions">
+<button onclick="alert('Photo upload will be connected in the next version.')">📷 Photo</button>
+<button onclick="alert('Video upload will be connected in the next version.')">🎥 Video</button>
+<button onclick="alert('Live streaming will be connected in the next version.')">🔴 Live</button>
+</div>
+</div>
+
+<div class="post">
+<div class="user"><div class="avatar">S</div><div><div class="name">SK AOWLAD</div><div class="handle">@skaowlad · 2m</div></div></div>
+<p>Welcome to ZOVA 🌍 — Create, connect and share your world.</p>
+<div class="video">▶</div>
+<div class="postbar"><span>♡ 128</span><span>💬 24</span><span>↗ Share</span><span>⭐ Support</span></div>
+</div>
+
+<div class="post">
+<div class="user"><div class="avatar">Z</div><div><div class="name">ZOVA Official</div><div class="handle">@zova · 10m</div></div></div>
+<p>একটি নতুন social world তৈরি হচ্ছে। এখানে Creator-রাই হবে আমাদের শক্তি। 🚀</p>
+<div class="postbar"><span>♡ 86</span><span>💬 13</span><span>↗ Share</span><span>⭐ Support</span></div>
+</div>
+</div>
+
+<nav class="nav">
+<button>🏠<br>Home</button>
+<button>🎬<br>Shorts</button>
+<button class="plus" onclick="newPost()">+</button>
+<button>🔔<br>Alerts</button>
+<button>👤<br>Profile</button>
+</nav>
+</div>
+
+<script>
+function tab(el){
+ document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));
+ el.classList.add('active');
+}
+function newPost(){
+ const t=document.getElementById('postText');
+ t.focus();
+ t.scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+</body>
+</html>
